@@ -1,0 +1,38 @@
+# Type-check, test, and check that the committed dist/plugin.js is exactly what the source
+# builds to: the editor loads that file straight from the repository at the version an
+# address names, so a pinned tag has to be its own source, built. (scm-js's own plugins use
+# the shared workflow in scm-js/.github, which commits the bundle with a deploy key of that
+# organisation; this repository builds the same way but commits the bundle by hand.)
+name: CI
+
+on:
+  push:
+    branches: [main]
+    tags: ["v*"]
+  pull_request:
+  schedule:
+    # Weekly: type-check against the newest @scm-js/plugin-api, so a contract that moved shows up here.
+    - cron: "0 6 * * 1"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  ci:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - if: github.event_name == 'schedule'
+        run: npm install --no-save @scm-js/plugin-api@latest
+      - run: npm run typecheck
+      - run: npm test
+      - run: npm run build
+      - name: The committed bundle is what the source builds to
+        if: github.event_name != 'schedule'
+        run: git diff --exit-code -- dist/plugin.js

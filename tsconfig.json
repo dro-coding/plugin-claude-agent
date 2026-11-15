@@ -1,0 +1,23 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "lib": ["ES2022", "DOM", "DOM.Iterable"],
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "jsx": "react-jsx",
+    "types": [],
+    "strict": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "verbatimModuleSyntax": true,
+    "erasableSyntaxOnly": true,
+    "isolatedModules": true,
+    "skipLibCheck": true,
+    "noEmit": true,
+    // The Anthropic SDK's typings probe for these to type a Node fetch's options, and both
+    // bring all of @types/node with them; an empty module reads as "not present", so the
+    // SDK uses the DOM's fetch types (src/undici-types-stub.d.ts).
+    "paths": { "undici-types": ["./src/undici-types-stub.d.ts"], "undici": ["./src/undici-types-stub.d.ts"] }
+  },
+  "include": ["plugin.ts", "ko.ts", "src"]
+}

@@ -1,0 +1,30 @@
+{
+  "name": "scmjs-plugin-claude-agent",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Claude Agent: Claude reads and edits the open map with you, in the scmJS StarCraft map editor.",
+  "author": "dro-coding",
+  "license": "MIT",
+  "type": "module",
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "dev": "node scripts/build.mjs --watch",
+    "docs": "node scripts/sync-docs.mjs",
+    "typecheck": "tsc -p tsconfig.json",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^1.8.0",
+    "lucide-react": "^1.38.0",
+    "react": "^19.2.8",
+    "react-dom": "^19.2.8"
+  },
+  "devDependencies": {
+    "@scm-js/plugin-api": "^1.84.0",
+    "@types/react": "^19.2.18",
+    "@types/react-dom": "^19.2.4",
+    "esbuild": "^0.28.2",
+    "typescript": "~6.0.2",
+    "vitest": "^4.1.11"
+  }
+}
